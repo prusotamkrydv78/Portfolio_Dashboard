@@ -7,6 +7,7 @@ export default function SkillForm({ skill, onClose }) {
     name: skill?.name || '',
     category: skill?.category || 'Frontend Development',
     proficiency: skill?.proficiency || 0,
+    icon: skill?.icon || '' // Changed to simple icon string
   });
 
   const handleSubmit = (e) => {
@@ -23,6 +24,21 @@ export default function SkillForm({ skill, onClose }) {
         </h2>
         
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Icon Input */}
+          <div>
+            <label className="block text-gray-400 mb-2">Icon Class/Name</label>
+            <input
+              type="text"
+              placeholder="e.g. FaReact"
+              value={formData.icon}
+              onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
+              className="w-full bg-[#212226] text-white rounded-lg p-2"
+            />
+            <p className="text-xs text-gray-400 mt-1">
+              Enter the icon name from react-icons (e.g. FaReact, SiJavascript)
+            </p>
+          </div>
+
           <div>
             <label className="block text-gray-400 mb-2">Skill Name</label>
             <input
