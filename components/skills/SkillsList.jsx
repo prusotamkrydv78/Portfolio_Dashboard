@@ -13,22 +13,22 @@ export default function SkillsList({ onEdit, onDelete }) {
       items: [
         { 
           name: 'NextJs', 
-          proficiency: 85,
+          percentage: 85,
           icon: <TbBrandNextjs className="w-5 h-5" />
         },
         { 
           name: 'Angular', 
-          proficiency: 85,
+          percentage: 85,
           icon: <FaAngular className="w-5 h-5" />
         },
         { 
           name: 'ReactJs', 
-          proficiency: 95,
+          percentage: 95,
           icon: <FaReact className="w-5 h-5" />
         },
         { 
           name: 'JavaScript', 
-          proficiency: 85,
+          percentage: 85,
           icon: <FaJs className="w-5 h-5" />
         },
       ]
@@ -50,12 +50,12 @@ export default function SkillsList({ onEdit, onDelete }) {
                       <span className="text-gray-400">{skill.icon}</span>
                       <span className="text-white">{skill.name}</span>
                     </div>
-                    <span className="text-gray-400">{skill.proficiency}%</span>
+                    <span className="text-gray-400">{skill.percentage}%</span>
                   </div>
                   <div className="h-2 bg-[#212226] rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
-                      style={{ width: `${skill.proficiency}%` }}
+                      style={{ width: `${skill.percentage}%` }}
                     />
                   </div>
                 </div>

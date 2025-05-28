@@ -6,7 +6,7 @@ export default function SkillForm({ skill, onClose }) {
   const [formData, setFormData] = useState({
     name: skill?.name || '',
     category: skill?.category || 'Frontend Development',
-    proficiency: skill?.proficiency || 0,
+    percentage: skill?.percentage || 0,
     icon: skill?.icon || '' // Changed to simple icon string
   });
 
@@ -64,14 +64,14 @@ export default function SkillForm({ skill, onClose }) {
 
           <div>
             <label className="block text-gray-400 mb-2">
-              Proficiency ({formData.proficiency}%)
+              percentage ({formData.percentage}%)
             </label>
             <input
               type="range"
               min="0"
               max="100"
-              value={formData.proficiency}
-              onChange={(e) => setFormData({ ...formData, proficiency: e.target.value })}
+              value={formData.percentage}
+              onChange={(e) => setFormData({ ...formData, percentage: e.target.value })}
               className="w-full"
             />
           </div>
