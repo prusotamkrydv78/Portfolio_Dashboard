@@ -1,9 +1,10 @@
+import Dashboard from "@/components/Dashboard";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <div className="min-h-screen p-8 md:p-12">
-      <main className="max-w-4xl mx-auto">
+      {/* <main className="max-w-4xl mx-auto">
         <div className="text-center md:text-left">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
             Hi, I'm <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">John Doe</span>
@@ -30,7 +31,8 @@ export default function Home() {
             </a>
           </div>
         </div>
-      </main>
+      </main> */}
+      <Dashboard/>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
