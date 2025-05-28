@@ -10,15 +10,24 @@ import {
   FiUser, 
   FiBriefcase, 
   FiMail,
-  FiMenu, 
-  FiX, 
+  FiSettings,
   FiSun, 
   FiMoon 
 } from 'react-icons/fi'; 
 
-const ThemeToggle = () => {
-  const { theme, setTheme } = useTheme();
+const navItems = [
+  { name: 'Overview', path: '/', icon: <FiHome className="w-5 h-5" /> },
+  { name: 'Projects', path: '/projects', icon: <FiCode className="w-5 h-5" /> },
+  { name: 'About', path: '/about', icon: <FiUser className="w-5 h-5" /> },
+  { name: 'Blog', path: '/blog', icon: <FiBriefcase className="w-5 h-5" /> },
+  { name: 'Contact', path: '/contact', icon: <FiMail className="w-5 h-5" /> },
+  { name: 'Settings', path: '/settings', icon: <FiSettings className="w-5 h-5" /> },
+];
+
+export default function Sidebar() {
   const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
 
   // Ensure the component is mounted before rendering to avoid hydration issues
   useEffect(() => {
@@ -29,125 +38,68 @@ const ThemeToggle = () => {
     return null;
   }
 
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
-
   return (
-    <button
-      onClick={toggleTheme}
-      className="p-2 rounded-full hover:bg-white/10 transition-colors"
-      aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-    >
-      {theme === 'dark' ? (
-        <FiSun className="w-5 h-5 text-yellow-400" />
-      ) : (
-        <FiMoon className="w-5 h-5 text-gray-600" />
-      )}
-    </button>
-  );
-};
-
-const navItems = [
-  { name: 'Dashboard', path: '/', icon: <FiHome className="w-5 h-5" /> },
-  { name: 'Projects', path: '/projects', icon: <FiCode className="w-5 h-5" /> },
-  { name: 'Skills', path: '/skills', icon: <FiUser className="w-5 h-5" /> },
-  { name: 'Blog', path: '/blog', icon: <FiBriefcase className="w-5 h-5" /> },
-  { name: 'Contact', path: '/contact', icon: <FiMail className="w-5 h-5" /> },
-];
-
-export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const pathname = usePathname();
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      if (window.innerWidth >= 768) {
-        setIsOpen(true);
-      } else {
-        setIsOpen(false);
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const toggleSidebar = () => {
-    if (isMobile) {
-      setIsOpen(!isOpen);
-    }
-  };
-
-  return (
-    <>
-      {/* Mobile menu button */}
-      <button 
-        onClick={toggleSidebar}
-        className="fixed top-4 left-4 z-50 p-2 rounded-md md:hidden bg-gray-800"
-        aria-label="Toggle menu"
-      >
-        {isOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
-      </button>
-
-      {/* Overlay */}
-      {isMobile && isOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
-          onClick={toggleSidebar}
-        />
-      )}
-
-      {/* Sidebar */}
-      <aside 
-        className={`fixed top-0 left-0 h-full w-[240px] bg-[#1a1b1e] z-40 transition-transform duration-300 ease-in-out ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        } md:translate-x-0`}
-      >
-        <div className="flex flex-col h-full px-4 py-6">
-          {/* Profile Section */}
-          <div className="mb-8">
-            <div className="flex items-center space-x-3 px-2">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-400 to-purple-500">
-                <img
-                  src="/path-to-your-profile-image.jpg"
-                  alt="Profile"
-                  className="w-full h-full rounded-full object-cover"
-                />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-white">Sophia Chen</p>
-                <p className="text-xs text-gray-400">Full Stack Developer</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <nav className="flex-1">
-            <ul className="space-y-1">
-              {navItems.map((item) => (
-                <li key={item.path}>
-                  <Link
-                    href={item.path}
-                    onClick={toggleSidebar}
-                    className={`flex items-center px-3 py-2 rounded-lg transition-colors ${
-                      pathname === item.path
-                        ? 'bg-white/10 text-white'
-                        : 'text-gray-400 hover:bg-white/5 hover:text-white'
-                    }`}
-                  >
-                    <span className="mr-3">{item.icon}</span>
-                    <span className="text-sm">{item.name}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+    <aside className="fixed top-0 left-0 h-screen w-64 bg-white/10 backdrop-blur-lg border-r border-white/10">
+      {/* Profile Section */}
+      <div className="p-6">
+        <div className="relative w-16 h-16 mx-auto mb-4">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-pulse" />
+          <img
+            src="/avatar.jpg"
+            alt="Profile"
+            className="relative w-full h-full rounded-full object-cover border-2 border-white/20"
+          />
         </div>
-      </aside>
-    </>
+        <h1 className="text-lg font-medium text-center text-white">John Doe</h1>
+        <p className="text-sm text-center text-gray-400">Full Stack Developer</p>
+      </div>
+
+      {/* Navigation */}
+      <nav className="px-3 py-4">
+        <ul className="space-y-1">
+          {navItems.map((item) => (
+            <li key={item.path}>
+              <Link
+                href={item.path}
+                className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 group
+                  ${pathname === item.path 
+                    ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-white' 
+                    : 'text-gray-400 hover:bg-white/5'
+                  }`}
+              >
+                <span className={`w-5 h-5 mr-3 transition-transform group-hover:scale-110
+                  ${pathname === item.path ? 'text-purple-400' : ''}`}>
+                  {item.icon}
+                </span>
+                <span className="font-medium">{item.name}</span>
+                {pathname === item.path && (
+                  <span className="ml-auto w-1.5 h-1.5 rounded-full bg-purple-400" />
+                )}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      {/* Theme Toggle */}
+      <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10">
+        <button
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          className="flex items-center w-full px-4 py-3 rounded-lg text-gray-400 hover:bg-white/5 transition-colors"
+        >
+          {theme === 'dark' ? (
+            <>
+              <FiSun className="w-5 h-5 mr-3 text-amber-400" />
+              <span>Light Mode</span>
+            </>
+          ) : (
+            <>
+              <FiMoon className="w-5 h-5 mr-3" />
+              <span>Dark Mode</span>
+            </>
+          )}
+        </button>
+      </div>
+    </aside>
   );
 }
