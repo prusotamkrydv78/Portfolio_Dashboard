@@ -1,124 +1,101 @@
 'use client';
 
 import { useState } from 'react';
+import { FiPlus, FiSearch, FiGrid, FiList, FiFilter } from 'react-icons/fi';
 import BlogForm from '@/components/blog/BlogForm';
-import { FiEdit2, FiTrash2, FiPlus } from 'react-icons/fi';
-import { toast } from 'sonner';
+import BlogCard from '@/components/blog/BlogCard';
 
 export default function BlogPage() {
+  const [view, setView] = useState('grid');
   const [showForm, setShowForm] = useState(false);
-  const [editingBlog, setEditingBlog] = useState(null);
-  const [blogs, setBlogs] = useState([
+  const [filter, setFilter] = useState('all');
+
+  const blogs = [
     {
       id: 1,
       title: 'Getting Started with Next.js 13',
-      description: 'Learn how to build modern web applications with Next.js 13',
-      content: 'Next.js 13 introduces several new features...',
-      image: '/blog/nextjs.jpg',
-      category: 'Web Development',
-      tags: ['Next.js', 'React', 'JavaScript'],
+      excerpt: 'Learn how to build modern web applications with Next.js 13',
+      content: 'Content goes here...',
+      coverImage: '/blog/nextjs.jpg',
+      category: 'Development',
+      tags: ['Next.js', 'React', 'Web Dev'],
+      status: 'published',
       publishDate: '2023-12-01',
-      status: 'published'
-    },
-    // Add more sample blogs...
-  ]);
-
-  const handleSave = (data) => {
-    if (editingBlog) {
-      setBlogs(blogs.map(blog => 
-        blog.id === editingBlog.id ? { ...data, id: blog.id } : blog
-      ));
-      toast.success('Blog updated successfully');
-    } else {
-      setBlogs([...blogs, { ...data, id: Date.now() }]);
-      toast.success('Blog created successfully');
+      readTime: '5 min read'
     }
-    setShowForm(false);
-    setEditingBlog(null);
-  };
-
-  const handleDelete = (id) => {
-    setBlogs(blogs.filter(blog => blog.id !== id));
-    toast.success('Blog deleted successfully');
-  };
+    // Add more blog posts...
+  ];
 
   return (
-    <div className="min-h-screen bg-[#13151a] p-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-semibold text-white">Blog Management</h1>
+    <div className="min-h-screen bg-gradient-to-b from-[#13151a] to-[#1a1b1e]">
+      <div className="max-w-7xl mx-auto p-8 space-y-8">
+        {/* Header */}
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+              Blog Posts
+            </h1>
+            <p className="text-gray-400 mt-1">Manage your blog content</p>
+          </div>
           <button
             onClick={() => setShowForm(true)}
-            className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            className="flex items-center px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
           >
-            <FiPlus className="mr-2" /> New Blog Post
+            <FiPlus className="mr-2" /> New Post
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogs.map((blog) => (
-            <div key={blog.id} className="bg-[#1a1b1e] rounded-xl overflow-hidden">
-              {blog.image && (
-                <img 
-                  src={blog.image} 
-                  alt={blog.title}
-                  className="w-full h-48 object-cover"
-                />
-              )}
-              <div className="p-4">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-lg font-medium text-white">{blog.title}</h3>
-                    <span className="text-sm text-gray-400">{blog.category}</span>
-                  </div>
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => {
-                        setEditingBlog(blog);
-                        setShowForm(true);
-                      }}
-                      className="p-2 text-gray-400 hover:text-white"
-                    >
-                      <FiEdit2 className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(blog.id)}
-                      className="p-2 text-gray-400 hover:text-red-500"
-                    >
-                      <FiTrash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-                <p className="mt-2 text-gray-400 text-sm line-clamp-2">
-                  {blog.description}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {blog.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-1 text-xs bg-white/10 text-gray-300 rounded"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-4 text-sm text-gray-400">
-                  {new Date(blog.publishDate).toLocaleDateString()}
-                </div>
-              </div>
-            </div>
+        {/* Filters and Search */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="md:col-span-2 relative">
+            <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search posts..."
+              className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+          >
+            <option value="all">All Posts</option>
+            <option value="published">Published</option>
+            <option value="draft">Drafts</option>
+          </select>
+          <div className="flex justify-end space-x-2">
+            <button
+              onClick={() => setView('grid')}
+              className={`p-2.5 rounded-lg ${view === 'grid' ? 'bg-purple-500 text-white' : 'text-gray-400 hover:text-white'}`}
+            >
+              <FiGrid className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => setView('list')}
+              className={`p-2.5 rounded-lg ${view === 'list' ? 'bg-purple-500 text-white' : 'text-gray-400 hover:text-white'}`}
+            >
+              <FiList className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Blog Grid/List */}
+        <div className={`grid gap-8 ${view === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
+          {blogs.map(blog => (
+            <BlogCard
+              key={blog.id}
+              blog={blog}
+              view={view}
+              onEdit={() => {}}
+              onDelete={() => {}}
+            />
           ))}
         </div>
 
+        {/* Blog Form Modal */}
         {showForm && (
-          <BlogForm
-            blog={editingBlog}
-            onClose={() => {
-              setShowForm(false);
-              setEditingBlog(null);
-            }}
-            onSave={handleSave}
-          />
+          <BlogForm onClose={() => setShowForm(false)} />
         )}
       </div>
     </div>
