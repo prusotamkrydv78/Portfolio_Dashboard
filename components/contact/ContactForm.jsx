@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FiPlus, FiX, FiLoader } from 'react-icons/fi';
+import { FiX, FiPlus, FiLoader } from 'react-icons/fi';
 import { toast } from 'sonner';
 import { updateContact, addSocialLink, updateSocialLink, deleteSocialLink } from '@/lib/api/contact';
 
@@ -111,40 +111,58 @@ export default function ContactForm({ contact, onClose, onUpdate }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-      <div className="bg-[#1a1b1e] rounded-xl w-full max-w-2xl m-4">
-        <div className="p-6">
-          <h2 className="text-xl text-white mb-6">Update Contact Information</h2>
-          
-          <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <div className="bg-[#1a1b1e] rounded-xl w-full max-w-2xl flex flex-col max-h-[90vh] border border-white/10">
+        {/* Header */}
+        <div className="flex-shrink-0 flex items-center justify-between p-6 border-b border-white/10">
+          <h2 className="text-xl font-semibold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+            Update Contact Information
+          </h2>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+          >
+            <FiX className="w-5 h-5 text-gray-400" />
+          </button>
+        </div>
+
+        {/* Form */}
+        <div className="flex-1 overflow-y-auto p-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-4">
               <div>
-                <label className="block text-gray-400 mb-2">Email</label>
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  Email Address
+                </label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full bg-[#212226] text-white rounded-lg p-2"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-400 mb-2">Phone</label>
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  Phone Number
+                </label>
                 <input
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full bg-[#212226] text-white rounded-lg p-2"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-400 mb-2">Location</label>
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  Location
+                </label>
                 <input
                   type="text"
                   value={formData.location}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                  className="w-full bg-[#212226] text-white rounded-lg p-2"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
 
@@ -238,19 +256,18 @@ export default function ContactForm({ contact, onClose, onUpdate }) {
               </div>
             </div>
 
-            <div className="flex justify-end space-x-3 pt-4">
+            {/* Actions */}
+            <div className="flex-shrink-0 flex justify-end items-center gap-3 p-6 border-t border-white/10 bg-[#1a1b1e]">
               <button
-                type="button"
                 onClick={onClose}
-                disabled={loading}
-                className="px-4 py-2 text-gray-400 hover:text-white disabled:opacity-50"
+                className="px-4 py-2 text-gray-400 hover:text-white transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 flex items-center space-x-2"
+                className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-colors flex items-center space-x-2"
               >
                 {loading && <FiLoader className="w-4 h-4 animate-spin" />}
                 <span>Save Changes</span>
