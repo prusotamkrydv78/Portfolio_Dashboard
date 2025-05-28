@@ -1,3 +1,6 @@
+'use client';
+
+import { usePathname } from 'next/navigation';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
@@ -13,20 +16,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "Portfolio",
-  description: "Personal portfolio website",
-};
+// export const metadata = {
+//   title: "Portfolio",
+//   description: "Personal portfolio website",
+// };
 
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
+  const isAuthRoute = pathname?.includes('/auth');
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-gray-900 transition-colors duration-200`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Sidebar />
-          <div className="md:pl-60">
+          {!isAuthRoute && <Sidebar />}
+          <div className={!isAuthRoute ? "md:pl-60" : ""}>
             {children}
           </div>
         </ThemeProvider>
