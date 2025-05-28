@@ -1,41 +1,29 @@
-import { FiGithub, FiLinkedin, FiTwitter } from 'react-icons/fi';
+import { FiGithub, FiTwitter, FiLinkedin, FiGlobe } from 'react-icons/fi';
 
 export default function SocialLinks() {
-  const socialLinks = [
-    {
-      icon: <FiGithub className="w-5 h-5" />,
-      label: 'GitHub',
-      username: 'github',
-      url: 'https://github.com'
-    },
-    {
-      icon: <FiLinkedin className="w-5 h-5" />,
-      label: 'LinkedIn',
-      username: 'linkedin',
-      url: 'https://linkedin.com'
-    },
-    {
-      icon: <FiTwitter className="w-5 h-5" />,
-      label: 'Twitter',
-      username: 'twitter',
-      url: 'https://twitter.com'
-    }
+  const links = [
+    { icon: <FiGithub />, name: 'GitHub', url: 'https://github.com', username: '@johndoe' },
+    { icon: <FiTwitter />, name: 'Twitter', url: 'https://twitter.com', username: '@johndoe' },
+    { icon: <FiLinkedin />, name: 'LinkedIn', url: 'https://linkedin.com', username: '@johndoe' },
+    { icon: <FiGlobe />, name: 'Website', url: 'https://website.com', username: 'website.com' },
   ];
 
   return (
-    <div className="grid grid-cols-3 gap-4">
-      {socialLinks.map((link) => (
+    <div className="space-y-3">
+      {links.map((link, index) => (
         <a
-          key={link.label}
+          key={index}
           href={link.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center space-x-3 p-4 rounded-lg bg-[#212226] hover:bg-[#2a2b30] transition-colors"
+          className="flex items-center p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors group"
         >
-          <span className="text-gray-400">{link.icon}</span>
-          <div>
-            <div className="text-sm text-white">{link.label}</div>
-            <div className="text-xs text-gray-400">@{link.username}</div>
+          <span className="p-2 rounded-lg bg-purple-500/10 text-purple-400 group-hover:scale-110 transition-transform">
+            {link.icon}
+          </span>
+          <div className="ml-3">
+            <p className="text-white text-sm font-medium">{link.name}</p>
+            <p className="text-gray-400 text-xs">{link.username}</p>
           </div>
         </a>
       ))}
