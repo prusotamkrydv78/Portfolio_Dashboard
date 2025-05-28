@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Sidebar />
-          <div className="md:pl-64">
+          <div className="md:pl-60">
             {children}
           </div>
         </ThemeProvider>

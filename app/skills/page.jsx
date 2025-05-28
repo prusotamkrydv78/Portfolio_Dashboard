@@ -23,7 +23,7 @@ export default function SkillsPage() {
 
   return (
     <div className="min-h-screen bg-[#13151a] p-6">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-semibold text-white">Skills Management</h1>
           <button

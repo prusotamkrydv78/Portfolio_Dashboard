@@ -33,7 +33,7 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-[#13151a] p-6">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-semibold text-white">Contact Information</h1>
