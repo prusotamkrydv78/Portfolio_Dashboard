@@ -1,5 +1,4 @@
-const mongoose = require("mongoose")
-
+import mongoose from "mongoose"
 const AboutsSchema = new mongoose.Schema({
 
     projects: {
@@ -20,5 +19,4 @@ const AboutsSchema = new mongoose.Schema({
     },
 
 })
-
-module.exports = mongoose.model("Abouts", AboutsSchema)
+export default mongoose.models?.Abouts || mongoose.model("Abouts", AboutsSchema)

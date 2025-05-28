@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+import mongoose from "mongoose"
 
 const LinksSchema = new mongoose.Schema({
     name: {
@@ -16,4 +16,4 @@ const LinksSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model("Links", LinksSchema)
+export default mongoose.models?.Links || mongoose.model("Links", LinksSchema)

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const ProjectsSchema = new mongoose.Schema({
     name: {
@@ -32,4 +32,4 @@ const ProjectsSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('Projects', ProjectsSchema);
+export default mongoose.models?.Projects || mongoose.model("Projects", ProjectsSchema);
