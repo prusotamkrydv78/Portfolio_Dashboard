@@ -6,68 +6,70 @@ import { FiMail, FiLock, FiLoader } from 'react-icons/fi';
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    // Add authentication logic here
-    setTimeout(() => setLoading(false), 1000);
-  };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-b from-[#13151a] to-[#1a1b1e] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <div className="bg-[#1a1b1e] rounded-2xl p-8 shadow-xl">
-          <h2 className="text-2xl font-semibold text-white mb-6 text-center">Welcome Back</h2>
-          
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-8 border border-white/10">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+              Welcome Back
+            </h1>
+            <p className="text-gray-400 mt-2">Sign in to your account</p>
+          </div>
+
+          {/* Form */}
+          <form className="space-y-6">
             <div>
-              <label className="block text-gray-400 mb-2">Email</label>
+              <label className="block text-sm font-medium text-gray-400 mb-2">Email</label>
               <div className="relative">
                 <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full bg-[#212226] text-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
+                  className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  placeholder="Enter your email"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-gray-400 mb-2">Password</label>
+              <label className="block text-sm font-medium text-gray-400 mb-2">Password</label>
               <div className="relative">
                 <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="password"
-                  value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="w-full bg-[#212226] text-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
+                  className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  placeholder="Enter your password"
                 />
               </div>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <label className="flex items-center">
+                <input type="checkbox" className="w-4 h-4 bg-white/5 border-white/10 rounded text-purple-500 focus:ring-purple-500" />
+                <span className="ml-2 text-sm text-gray-400">Remember me</span>
+              </label>
+              <Link href="/auth/forgot-password" className="text-sm text-purple-400 hover:text-purple-300">
+                Forgot password?
+              </Link>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white rounded-lg py-2 hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center justify-center"
+              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg py-3 font-medium hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
             >
-              {loading ? <FiLoader className="w-5 h-5 animate-spin" /> : 'Sign In'}
+              {loading ? <FiLoader className="w-5 h-5 animate-spin mx-auto" /> : 'Sign in'}
             </button>
           </form>
 
-          <p className="mt-4 text-center text-gray-400">
+          <div className="mt-6 text-center text-gray-400 text-sm">
             Don't have an account?{' '}
-            <Link href="/auth/register" className="text-blue-400 hover:text-blue-300">
-              Register
+            <Link href="/auth/register" className="text-purple-400 hover:text-purple-300 font-medium">
+              Sign up
             </Link>
-          </p>
+          </div>
         </div>
       </div>
     </div>

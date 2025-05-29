@@ -57,7 +57,7 @@ export default function RootLayout({ children }) {
                             </div>
                         </>
                     )}
-                    <main className={`${!isAuthRoute ? "lg:pl-60" : ""} sm:p-4  md:p-8 md:pt-8`}>
+                    <main className={`${!isAuthRoute ? "lg:pl-60" : ""} `}>
                         {children}
                     </main>
                 </ThemeProvider>
