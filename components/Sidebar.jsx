@@ -39,7 +39,7 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="fixed top-0 left-0 h-screen w-64 bg-white/10 backdrop-blur-lg border-r border-white/10">
+    <aside className="fixed inset-y-0 left-0 hidden lg:block w-60 bg-[#1a1b1e]/95 backdrop-blur-lg border-r border-white/10">
       {/* Profile Section */}
       <div className="p-6">
         <div className="relative w-16 h-16 mx-auto mb-4">
