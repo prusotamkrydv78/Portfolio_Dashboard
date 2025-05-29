@@ -39,9 +39,10 @@ export default function BlogPage() {
           </div>
           <button
             onClick={() => setShowForm(true)}
-            className="flex items-center px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+            className="flex items-center justify-center px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
           >
-            <FiPlus className="mr-2" /> New Post
+            <FiPlus className="sm:mr-2" />
+            <span className='hidden sm:inline'> New Post</span>
           </button>
         </div>
 

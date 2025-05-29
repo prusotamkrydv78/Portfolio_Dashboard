@@ -36,14 +36,14 @@ export default function ProjectsPage() {
           </div>
           <button
             onClick={() => setShowForm(true)}
-            className="flex items-center px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+            className="flex items-center justify-center px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
           >
-            <FiPlus className="mr-2" /> Add Project
+            <FiPlus className="sm:mr-2" /><span className='hidden sm:inline'> Add Project</span>
           </button>
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between bg-white/5 backdrop-blur-lg rounded-xl p-4 border border-white/10">
+        <div className="flex   sm:flex-row gap-4 sm:items-center justify-between bg-white/5 backdrop-blur-lg rounded-xl p-4 border border-white/10">
           <div className="relative flex-1 max-w-md">
             <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             <input

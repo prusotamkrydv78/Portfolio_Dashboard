@@ -32,9 +32,9 @@ export default function ContactPage() {
           </div>
           <button
             onClick={() => setShowForm(true)}
-            className="flex items-center px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+            className="flex items-center justify-center px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
           >
-            <FiPlus className="mr-2" /> Update Info
+            <FiPlus className="sm:mr-2" /> <span className='hidden sm:inline'>Update Info</span>
           </button>
         </div>
 
