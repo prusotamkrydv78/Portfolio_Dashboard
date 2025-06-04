@@ -1,7 +1,5 @@
 import Dashboard from "@/components/Dashboard";
-import connectDB from "@/database/connectDB";
-import Image from "next/image";
-
+import connectDB from "@/database/connectDB"; 
 export default function Home() {
   connectDB()
   return (
