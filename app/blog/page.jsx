@@ -1,15 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { FiPlus, FiSearch, FiGrid, FiList, FiFilter, FiX, FiCheck } from "react-icons/fi";
+import {
+  FiPlus,
+  FiSearch,
+  FiGrid,
+  FiList,
+  FiFilter,
+  FiX,
+  FiCheck,
+} from "react-icons/fi";
 import BlogForm from "@/components/blog/BlogForm";
 import BlogCard from "@/components/blog/BlogCard";
+import DeleteDialogComponent from "@/components/DeleteComponent"; 
 
 export default function BlogPage() {
   const [view, setView] = useState("grid");
   const [showForm, setShowForm] = useState(false);
   const [filter, setFilter] = useState("all");
   const [showFilterDialog, setShowFilterDialog] = useState(false);
+  const [blogToEdit, setBlogToEdit] = useState(null);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   const blogs = [
     {
@@ -28,10 +40,28 @@ export default function BlogPage() {
   ];
 
   const filterOptions = [
-    { id: 'all', name: 'All Posts', icon: '📑' },
-    { id: 'published', name: 'Published', icon: '✅' },
-    { id: 'draft', name: 'Drafts', icon: '📝' },
+    { id: "all", name: "All Posts", icon: "📑" },
+    { id: "published", name: "Published", icon: "✅" },
+    { id: "draft", name: "Drafts", icon: "📝" },
   ];
+
+  const handleDelete = (blog) => {
+    // Implement delete functionality
+    console.log("Deleting blog:", blog);
+    setItemToDelete(blog);
+    setShowDeleteDialog(true);
+  };
+  const confirmDelete = () => {
+    // Logic to delete the blog post
+    console.log("Blog deleted:", blogToEdit);
+    setShowDeleteDialog(false);
+  };
+  const handleEdit = (blog) => {
+    // Implement edit functionality
+    console.log("Editing blog:", blog);
+    setBlogToEdit(blog);
+    setShowForm(true);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#13151a] to-[#1a1b1e]">
@@ -72,7 +102,10 @@ export default function BlogPage() {
           >
             <div className="flex items-cente justify-centerr gap-2">
               <FiFilter className="w-5 h-5" />
-              <span className="hidden sm:inline">{filterOptions.find(f => f.id === filter)?.name || 'All Posts'}</span>
+              <span className="hidden sm:inline">
+                {filterOptions.find((f) => f.id === filter)?.name ||
+                  "All Posts"}
+              </span>
             </div>
           </button>
 
@@ -113,8 +146,8 @@ export default function BlogPage() {
               key={blog.id}
               blog={blog}
               view={view}
-              onEdit={() => {}}
-              onDelete={() => {}}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
             />
           ))}
         </div>
@@ -124,7 +157,9 @@ export default function BlogPage() {
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-[60]">
             <div className="bg-[#1a1b1e] rounded-xl w-full max-w-md overflow-hidden border border-white/10">
               <div className="flex items-center justify-between p-6 border-b border-white/10">
-                <h3 className="text-lg font-semibold text-white">Filter Posts</h3>
+                <h3 className="text-lg font-semibold text-white">
+                  Filter Posts
+                </h3>
                 <button
                   onClick={() => setShowFilterDialog(false)}
                   className="p-2 hover:bg-white/10 rounded-lg transition-colors"
@@ -144,17 +179,15 @@ export default function BlogPage() {
                       }}
                       className={`flex items-center justify-between p-4 rounded-lg transition-colors ${
                         filter === option.id
-                          ? 'bg-purple-500/20 text-purple-400'
-                          : 'hover:bg-white/5 text-white'
+                          ? "bg-purple-500/20 text-purple-400"
+                          : "hover:bg-white/5 text-white"
                       }`}
                     >
                       <div className="flex items-center gap-3">
                         <span className="text-2xl">{option.icon}</span>
                         <span>{option.name}</span>
                       </div>
-                      {filter === option.id && (
-                        <FiCheck className="w-5 h-5" />
-                      )}
+                      {filter === option.id && <FiCheck className="w-5 h-5" />}
                     </button>
                   ))}
                 </div>
@@ -164,7 +197,15 @@ export default function BlogPage() {
         )}
 
         {/* Blog Form Modal */}
-        {showForm && <BlogForm onClose={() => setShowForm(false)} />}
+        {showForm && <BlogForm blog={blogToEdit} onClose={() => setShowForm(false)} />}
+        {/* Delete Confirmation Dialog */}
+        {showDeleteDialog && (
+          <DeleteDialogComponent
+            setShowDeleteDialog={setShowDeleteDialog}
+            itemToDelete={itemToDelete}
+            confirmDelete={confirmDelete}
+          />
+        )}
       </div>
     </div>
   );

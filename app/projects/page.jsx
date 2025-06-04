@@ -1,27 +1,73 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { FiPlus, FiSearch, FiGrid, FiList } from 'react-icons/fi';
-import ProjectForm from '@/components/projects/ProjectForm';
-import ProjectCard from '@/components/projects/ProjectCard';
+import { useState } from "react";
+import { FiPlus, FiSearch, FiGrid, FiList } from "react-icons/fi";
+import ProjectForm from "@/components/projects/ProjectForm";
+import ProjectCard from "@/components/projects/ProjectCard";
+import DeleteDialogComponent from "@/components/DeleteComponent";
 
 export default function ProjectsPage() {
-  const [view, setView] = useState('grid');
+  const [view, setView] = useState("grid");
   const [showForm, setShowForm] = useState(false);
+  const [projectToEdit, setProjectToEdit] = useState(null);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   const projects = [
     {
       id: 1,
-      title: 'E-commerce Website',
-      description: 'A modern e-commerce website built with Angular and Tailwind CSS.',
-      image: '/projects/ecommerce.jpg',
-      category: 'Web App',
-      tags: ['Angular', 'TailwindCSS', 'MongoDB'],
-      demo: 'https://demo.com',
-      code: 'https://github.com'
+      title: "Portfolio Dashboard",
+      description:
+        "A modern portfolio management system built with Next.js and Tailwind CSS.",
+      image: "/projects/portfolio-dashboard.png",
+      category: "Web App",
+      tags: ["Next.js", "TailwindCSS", "React"],
+      demo: "https://portfolio.example.com",
+      code: "https://github.com/yourusername/portfolio-dashboard",
     },
-    // Add more projects...
+    {
+      id: 2,
+      title: "Task Management API",
+      description:
+        "RESTful API for task management built with Node.js and Express.",
+      image: "/projects/task-api.png",
+      category: "Backend",
+      tags: ["Node.js", "Express", "MongoDB"],
+      demo: "https://api.example.com/docs",
+      code: "https://github.com/yourusername/task-api",
+    },
+    {
+      id: 3,
+      title: "Weather App",
+      description:
+        "Real-time weather application using OpenWeather API and React.",
+      image: "/projects/weather-app.png",
+      category: "Web App",
+      tags: ["React", "API Integration", "CSS3"],
+      demo: "https://weather.example.com",
+      code: "https://github.com/yourusername/weather-app",
+    },
   ];
+
+  const handleEdit = (project) => {
+    // Implement edit functionality
+    console.log("Editing project:", project);
+    setProjectToEdit(project);
+    setShowForm(true);
+  };
+
+  const handleDelete = (project) => {
+    // Implement delete functionality
+    console.log("Deleting project:", project);
+    console.log("Setting project to delete:", project);
+    setItemToDelete(project);
+    setShowDeleteDialog(true);
+  };
+  const confirmDelete = () => {
+    // Implement confirm delete functionality
+    console.log("Confirmed delete for project:", itemToDelete);
+    setShowDeleteDialog(false);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#13151a] to-[#1a1b1e]">
@@ -38,7 +84,8 @@ export default function ProjectsPage() {
             onClick={() => setShowForm(true)}
             className="flex items-center justify-center px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
           >
-            <FiPlus className="sm:mr-2" /><span className='hidden sm:inline'> Add Project</span>
+            <FiPlus className="sm:mr-2" />
+            <span className="hidden sm:inline"> Add Project</span>
           </button>
         </div>
 
@@ -54,14 +101,22 @@ export default function ProjectsPage() {
           </div>
           <div className=" hidden sm:flex items-center space-x-2">
             <button
-              onClick={() => setView('grid')}
-              className={`p-2 rounded-lg ${view === 'grid' ? 'bg-purple-500 text-white' : 'text-gray-400 hover:text-white'}`}
+              onClick={() => setView("grid")}
+              className={`p-2 rounded-lg ${
+                view === "grid"
+                  ? "bg-purple-500 text-white"
+                  : "text-gray-400 hover:text-white"
+              }`}
             >
               <FiGrid className="w-5 h-5" />
             </button>
             <button
-              onClick={() => setView('list')}
-              className={`p-2 rounded-lg ${view === 'list' ? 'bg-purple-500 text-white' : 'text-gray-400 hover:text-white'}`}
+              onClick={() => setView("list")}
+              className={`p-2 rounded-lg ${
+                view === "list"
+                  ? "bg-purple-500 text-white"
+                  : "text-gray-400 hover:text-white"
+              }`}
             >
               <FiList className="w-5 h-5" />
             </button>
@@ -69,7 +124,13 @@ export default function ProjectsPage() {
         </div>
 
         {/* Projects Grid */}
-        <div className={`grid gap-8 ${view === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
+        <div
+          className={`grid gap-8 ${
+            view === "grid"
+              ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+              : "grid-cols-1"
+          }`}
+        >
           {projects.map((project) => (
             <ProjectCard
               key={project.id}
@@ -82,7 +143,17 @@ export default function ProjectsPage() {
 
         {/* Project Form Modal */}
         {showForm && (
-          <ProjectForm onClose={() => setShowForm(false)} />
+          <ProjectForm
+            projectToEdit={projectToEdit}
+            onClose={() => setShowForm(false)}
+          />
+        )}
+        {showDeleteDialog && (
+          <DeleteDialogComponent
+            setShowDeleteDialog={setShowDeleteDialog}
+            confirmDelete={confirmDelete}
+            itemToDelete={itemToDelete}
+          />
         )}
       </div>
     </div>
