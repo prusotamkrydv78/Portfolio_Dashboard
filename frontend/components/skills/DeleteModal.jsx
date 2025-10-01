@@ -1,6 +1,7 @@
 export default function DeleteModal({ skill, onClose }) {
   const handleDelete = () => {
-    // TODO: Add API call to delete skill
+    // In a frontend-only version, we'll just show an alert
+    alert(`In a full-stack version, this would delete the skill: ${skill.name}`);
     onClose();
   };
 

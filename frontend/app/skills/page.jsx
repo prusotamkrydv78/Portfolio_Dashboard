@@ -25,10 +25,13 @@ export default function SkillsPage() {
     <div className="min-h-screen bg-[#13151a] p-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-semibold text-white">Skills Management</h1>
+          <h1 className="text-2xl font-semibold text-white">My Skills</h1>
           <button
-            onClick={() => setShowForm(true)}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            onClick={() => {
+              setEditingSkill(null);
+              setShowForm(true);
+            }}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             Add New Skill
           </button>

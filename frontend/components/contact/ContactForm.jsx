@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { FiX, FiPlus, FiLoader } from 'react-icons/fi';
 import { toast } from 'sonner';
-import { updateContact, addSocialLink, updateSocialLink, deleteSocialLink } from '@/lib/api/contact';
 
 export default function ContactForm({ contact, onClose, onUpdate }) {
   const [loading, setLoading] = useState(false);
@@ -47,12 +46,13 @@ export default function ContactForm({ contact, onClose, onUpdate }) {
     e.preventDefault();
     setLoading(true);
     try {
-      await updateContact(formData);
+      // Frontend-only: just update parent state and show a toast
+      await new Promise((r) => setTimeout(r, 300));
       toast.success('Contact information updated');
       onUpdate?.(formData);
       onClose();
     } catch (error) {
-      toast.error(error.message);
+      toast.error('Failed to update contact');
     } finally {
       setLoading(false);
     }
@@ -65,46 +65,41 @@ export default function ContactForm({ contact, onClose, onUpdate }) {
 
     setSocialLoading('add');
     try {
-      const addedSocial = await addSocialLink(newSocial);
+      await new Promise((r) => setTimeout(r, 200));
       setFormData({
         ...formData,
-        socials: [...formData.socials, addedSocial]
+        socials: [...formData.socials, { ...newSocial }]
       });
       setNewSocial({ name: '', platform: '', url: '', icon: '' });
       toast.success('Social link added');
     } catch (error) {
-      toast.error(error.message);
+      toast.error('Failed to add social link');
     } finally {
       setSocialLoading(null);
     }
   };
 
   const handleUpdateSocial = async (index, field, value) => {
-    const social = formData.socials[index];
     setSocialLoading(index);
     try {
-      const updatedSocial = await updateSocialLink(social.id, {
-        ...social,
-        [field]: value
-      });
+      await new Promise((r) => setTimeout(r, 150));
       updateSocialLink(index, field, value);
       toast.success('Social link updated');
     } catch (error) {
-      toast.error(error.message);
+      toast.error('Failed to update social link');
     } finally {
       setSocialLoading(null);
     }
   };
 
   const handleDeleteSocial = async (index) => {
-    const social = formData.socials[index];
     setSocialLoading(index);
     try {
-      await deleteSocialLink(social.id);
+      await new Promise((r) => setTimeout(r, 150));
       removeSocialLink(index);
       toast.success('Social link deleted');
     } catch (error) {
-      toast.error(error.message);
+      toast.error('Failed to delete social link');
     } finally {
       setSocialLoading(null);
     }

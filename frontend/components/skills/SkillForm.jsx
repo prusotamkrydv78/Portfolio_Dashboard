@@ -12,7 +12,8 @@ export default function SkillForm({ skill, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: Add API call to save skill
+    // In a frontend-only version, we'll just show an alert
+    alert('In a full-stack version, this would save the skill to the database.');
     onClose();
   };
 
