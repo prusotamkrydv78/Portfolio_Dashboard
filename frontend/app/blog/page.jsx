@@ -12,7 +12,8 @@ import {
 } from "react-icons/fi";
 import BlogForm from "@/components/blog/BlogForm";
 import BlogCard from "@/components/blog/BlogCard";
-import DeleteDialogComponent from "@/components/DeleteComponent"; 
+import DeleteDialogComponent from "@/components/DeleteComponent";
+import { useQuery } from "@tanstack/react-query";
 
 export default function BlogPage() {
   const [view, setView] = useState("grid");
@@ -23,6 +24,20 @@ export default function BlogPage() {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
 
+
+  async function getPosts() {
+    const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+    return res.json();
+  }
+
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["posts"],
+    queryFn: getPosts,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  console.log(data);
   const blogs = [
     {
       id: 1,
@@ -112,21 +127,19 @@ export default function BlogPage() {
           <div className="hidden sm:flex justify-end space-x-2">
             <button
               onClick={() => setView("grid")}
-              className={`p-2.5 rounded-lg ${
-                view === "grid"
-                  ? "bg-purple-500 text-white"
-                  : "text-gray-400 hover:text-white"
-              }`}
+              className={`p-2.5 rounded-lg ${view === "grid"
+                ? "bg-purple-500 text-white"
+                : "text-gray-400 hover:text-white"
+                }`}
             >
               <FiGrid className="w-5 h-5" />
             </button>
             <button
               onClick={() => setView("list")}
-              className={`p-2.5 rounded-lg ${
-                view === "list"
-                  ? "bg-purple-500 text-white"
-                  : "text-gray-400 hover:text-white"
-              }`}
+              className={`p-2.5 rounded-lg ${view === "list"
+                ? "bg-purple-500 text-white"
+                : "text-gray-400 hover:text-white"
+                }`}
             >
               <FiList className="w-5 h-5" />
             </button>
@@ -135,11 +148,10 @@ export default function BlogPage() {
 
         {/* Blog Grid/List */}
         <div
-          className={`grid gap-8 ${
-            view === "grid"
-              ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-              : "grid-cols-1"
-          }`}
+          className={`grid gap-8 ${view === "grid"
+            ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+            : "grid-cols-1"
+            }`}
         >
           {blogs.map((blog) => (
             <BlogCard
@@ -177,11 +189,10 @@ export default function BlogPage() {
                         setFilter(option.id);
                         setShowFilterDialog(false);
                       }}
-                      className={`flex items-center justify-between p-4 rounded-lg transition-colors ${
-                        filter === option.id
-                          ? "bg-purple-500/20 text-purple-400"
-                          : "hover:bg-white/5 text-white"
-                      }`}
+                      className={`flex items-center justify-between p-4 rounded-lg transition-colors ${filter === option.id
+                        ? "bg-purple-500/20 text-purple-400"
+                        : "hover:bg-white/5 text-white"
+                        }`}
                     >
                       <div className="flex items-center gap-3">
                         <span className="text-2xl">{option.icon}</span>

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Navbar from '@/components/Navbar';
+import QueryProvider from "@/utils/Tans-stack-provider";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -28,7 +29,9 @@ export default function RootLayout({ children }) {
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                     <Navbar/>
                     <main className={`${1 ? "lg:pl-60" : ""} `}>
+                        <QueryProvider>
                         {children}
+                        </QueryProvider>
                     </main>
                 </ThemeProvider>
             </body>
